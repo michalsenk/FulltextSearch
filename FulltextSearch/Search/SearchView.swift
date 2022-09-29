@@ -6,15 +6,36 @@
 //
 
 import SwiftUI
+import Combine
+import ComposableArchitecture
 
 struct SearchView: View {
+	let store: Store<SearchState, SearchAction>
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+		WithViewStore(self.store) { viewStore in
+			TextField(
+				"Hledat ...",
+				text: viewStore.binding(
+					get: \.searchString,
+					send: SearchAction.searchStringChanged)
+			)
+		}
+		
+        
     }
+}
+
+struct SeasrchDetailView: View {
+	var body: some View {
+		Text("Detail")
+	}
 }
 
 struct SearchView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchView()
+		
+		let store = Store(initialState: SearchState(), reducer: searchReducer, environment: SystemEnvironment.dev(environment: SearchEnvironment(searchRequest: mockSearchEffect)))
+		
+        SearchView(store: store)
     }
 }

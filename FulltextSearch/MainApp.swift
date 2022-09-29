@@ -6,12 +6,17 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 @main
 struct MainApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RootView(
+				store: Store(
+					initialState: RootState(),
+					reducer: rootReducer,
+					environment: SystemEnvironment.dev(environment: RootEnvironment())))
         }
     }
 }
