@@ -6,3 +6,12 @@
 //
 
 import Foundation
+
+struct SearchModel: Decodable, Equatable {
+	enum CodingKeys: String, CodingKey {
+		case name, sportName
+	}
+	
+	let name: String
+	let sportName: String
+}

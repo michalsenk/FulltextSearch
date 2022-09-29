@@ -6,15 +6,30 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 struct RootView: View {
+	
+	let store: Store<RootState, RootAction>
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+		WithViewStore(self.store.stateless) { _ in
+			
+			NavigationView() {
+				SearchView(store: store.scope(
+					state: \.searchState,
+					action: RootAction.searchAction))
+			}
+			
+		}
+					  
     }
 }
 
 struct RootView_Previews: PreviewProvider {
     static var previews: some View {
-        RootView()
+		RootView(store: Store(
+			initialState: RootState(),
+			reducer: rootReducer,
+			environment: SystemEnvironment.dev(environment: RootEnvironment())))
     }
 }
