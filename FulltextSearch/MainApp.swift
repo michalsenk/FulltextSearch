@@ -8,7 +8,7 @@
 import SwiftUI
 
 @main
-struct FulltextSearchApp: App {
+struct MainApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
