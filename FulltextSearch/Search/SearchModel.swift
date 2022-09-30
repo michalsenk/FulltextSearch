@@ -9,9 +9,14 @@ import Foundation
 
 struct SearchModel: Decodable, Equatable {
 	enum CodingKeys: String, CodingKey {
-		case name, sportName
+		case name, sportName, category
 	}
 	
 	let name: String
 	let sportName: String
+	let category: Int
+}
+
+extension SearchModel: Identifiable {
+	var id: String { name }
 }
