@@ -20,13 +20,27 @@ func searchEffect(decoder: JSONDecoder) -> Effect<[SearchModel], APIError> {
 		.eraseToEffect()
 }
 
-func mockSearchEffect(decoder: JSONDecoder) ->  Effect<[SearchModel], APIError> {
-
-	let mock = [
-		SearchModel(name: "Ronaldo", sportName: "Football"),
-		SearchModel(name: "Kincl", sportName: "MMA"),
-		SearchModel(name: "Škvor", sportName: "Thaibox"),
-		SearchModel(name: "Kohout", sportName: "Thaibox")
-	]
+func mockSearchEffect(searchQuery: String, searchCategory: Int, decoder: JSONDecoder) ->  Effect<[SearchModel], APIError> {
+	
+	var mock: [SearchModel] = []
+	
+	mock.append(SearchModel(name: "Glory", sportName: "Thaibox", category: 2))
+	mock.append(SearchModel(name: "Oktagon", sportName: "MMA", category: 2))
+	mock.append(SearchModel(name: "RFA", sportName: "MMA", category: 2))
+	mock.append(SearchModel(name: "UFC", sportName: "MMA", category: 2))
+	mock.append(SearchModel(name: "Škvor", sportName: "Thaibox", category: 1))
+	mock.append(SearchModel(name: "Kohout", sportName: "Thaibox", category: 1))
+	mock.append(SearchModel(name: "Ronaldo", sportName: "Fotbal", category: 1))
+	mock.append(SearchModel(name: "Kincl", sportName: "MMA", category: 1))
+	
+	// strstr
+	mock = mock.filter({
+		$0.name.lowercased().localizedStandardContains(searchQuery.lowercased()) ||
+		$0.sportName.lowercased().localizedStandardContains(searchQuery.lowercased()) })
+	// category
+	mock = mock.filter({
+		searchCategory == 0 || searchCategory == $0.category
+	})
+	
 	return Effect(value: mock)
 }

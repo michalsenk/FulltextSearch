@@ -26,6 +26,6 @@ let rootReducer = Reducer<
 	searchReducer.pullback(
 		state: \.searchState,
 		action: /RootAction.searchAction,
-		environment: { _ in SystemEnvironment.dev(environment: SearchEnvironment(searchRequest: searchEffect)) }
+		environment: { _ in SystemEnvironment.dev(environment: SearchEnvironment(searchRequest: mockSearchEffect)) }
 	)
 )

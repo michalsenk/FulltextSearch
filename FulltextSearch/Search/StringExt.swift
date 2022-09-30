@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+extension String {
+	func isValidSearchString() -> Bool {
+		return !self.isEmpty
+	}
+}

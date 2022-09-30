@@ -23,6 +23,7 @@
 		7846F81428E5D02F003961E2 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7846F81328E5D02F003961E2 /* RootView.swift */; };
 		7846F81628E5D1CD003961E2 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7846F81528E5D1CD003961E2 /* APIError.swift */; };
 		7846F81828E5D324003961E2 /* SystemEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7846F81728E5D324003961E2 /* SystemEnvironment.swift */; };
+		787FF49F28E72678001C4130 /* StringExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787FF49E28E72678001C4130 /* StringExt.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		7846F81328E5D02F003961E2 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		7846F81528E5D1CD003961E2 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		7846F81728E5D324003961E2 /* SystemEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemEnvironment.swift; sourceTree = "<group>"; };
+		787FF49E28E72678001C4130 /* StringExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExt.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,6 +175,7 @@
 				7846F80B28E5CEFB003961E2 /* SearchEffects.swift */,
 				7846F80D28E5CF0F003961E2 /* SearchModel.swift */,
 				7846F80F28E5CF20003961E2 /* SearchView.swift */,
+				787FF49E28E72678001C4130 /* StringExt.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -314,6 +317,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7846F81828E5D324003961E2 /* SystemEnvironment.swift in Sources */,
+				787FF49F28E72678001C4130 /* StringExt.swift in Sources */,
 				7846F81428E5D02F003961E2 /* RootView.swift in Sources */,
 				7846F80C28E5CEFB003961E2 /* SearchEffects.swift in Sources */,
 				7846F7DC28E5CD1E003961E2 /* ContentView.swift in Sources */,
@@ -489,6 +493,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -518,6 +523,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
