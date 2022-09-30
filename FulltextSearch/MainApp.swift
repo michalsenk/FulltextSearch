@@ -5,8 +5,8 @@
 //  Created by Michal Šenk on 29.09.2022.
 //
 
-import SwiftUI
 import ComposableArchitecture
+import SwiftUI
 
 @main
 struct MainApp: App {
@@ -16,7 +16,9 @@ struct MainApp: App {
 				store: Store(
 					initialState: RootState(),
 					reducer: rootReducer,
-					environment: SystemEnvironment.dev(environment: RootEnvironment())))
+					environment: SystemEnvironment.dev(environment: RootEnvironment())
+				)
+			)
         }
     }
 }

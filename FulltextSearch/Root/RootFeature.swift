@@ -22,10 +22,12 @@ let rootReducer = Reducer<
 	RootAction,
 	SystemEnvironment<RootEnvironment>
 >.combine(
-	
+	// swiftlint:disable:next trailing_closure
 	searchReducer.pullback(
 		state: \.searchState,
 		action: /RootAction.searchAction,
-		environment: { _ in SystemEnvironment.dev(environment: SearchEnvironment(searchRequest: mockSearchEffect)) }
+		environment: { _ in
+			SystemEnvironment.dev(environment: SearchEnvironment(searchRequest: mockSearchEffect))
+		}
 	)
 )

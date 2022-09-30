@@ -5,9 +5,9 @@
 //  Created by Michal Šenk on 29.09.2022.
 //
 
-import SwiftUI
 import Combine
 import ComposableArchitecture
+import SwiftUI
 
 struct SearchView: View {
 	let store: Store<SearchState, SearchAction>
@@ -19,7 +19,8 @@ struct SearchView: View {
 						"Hráč nebo soutěž ...",
 						text: viewStore.binding(
 							get: \.searchString,
-							send: SearchAction.searchStringChanged)
+							send: SearchAction.searchStringChanged
+						)
 					)
 					.textFieldStyle(.roundedBorder)
 					Button("Hledat") {
@@ -30,13 +31,15 @@ struct SearchView: View {
 				HStack {
 					Picker(selection: viewStore.binding(
 						get: \.searchCriteria,
-						send: SearchAction.searchCriteriaChanged),
-						   label: Text(""),
-						   content: {
-									Text("Vše").tag(0)
-									Text("Hráči").tag(1)
-									Text("Soutěže").tag(2)
-								})
+						send: SearchAction.searchCriteriaChanged
+					),
+					label: Text(""),
+					content: {
+						Text("Vše").tag(0)
+						Text("Hráči").tag(1)
+						Text("Soutěže").tag(2)
+					}
+					)
 					.pickerStyle(SegmentedPickerStyle())
 					.disabled(viewStore.isLoading)
 				}
@@ -45,7 +48,8 @@ struct SearchView: View {
 						Group {
 							if viewStore.isLoading {
 								Text("Načítám ...")
-							} else {
+							}
+							else {
 								ForEach(viewStore.results) { item in
 									NavigationLink(
 										destination: SeasrchDetailView(model: item)) {
@@ -64,7 +68,6 @@ struct SearchView: View {
 struct SearchResultItemView: View {
 	let item: SearchModel
 	var body: some View {
-		
 		Text(item.sportName).bold()
 		Text(item.name)
 		Spacer()
@@ -73,8 +76,15 @@ struct SearchResultItemView: View {
 
 struct SearchView_Previews: PreviewProvider {
     static var previews: some View {
-		let store = Store(initialState: SearchState(), reducer: searchReducer, environment: SystemEnvironment.dev(environment: SearchEnvironment(searchRequest: mockSearchEffect)))
-		
+		let store = Store(
+			initialState: SearchState(),
+			reducer: searchReducer,
+			environment: SystemEnvironment.dev(
+				environment: SearchEnvironment(
+					searchRequest: mockSearchEffect
+				)
+			)
+		)
         SearchView(store: store)
     }
 }
