@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+enum RootAction {
+	case searchAction(SearchAction)
+}

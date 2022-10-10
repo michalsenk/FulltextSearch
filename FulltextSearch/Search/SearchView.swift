@@ -23,25 +23,29 @@ struct SearchView: View {
 						)
 					)
 					.textFieldStyle(.roundedBorder)
+					.disableAutocorrection(true)
+					.autocapitalization(.none)
+
 					Button("Hledat") {
 						viewStore.send(.searchButtonTapped)
 					}
-					.disabled(viewStore.isLoading)
+					// .disabled(viewStore.isLoading)
 				}
 				HStack {
-					Picker(selection: viewStore.binding(
-						get: \.searchCriteria,
-						send: SearchAction.searchCriteriaChanged
+					Picker(
+						selection: viewStore.binding(
+							get: \.searchCategory.rawValue,
+							send: SearchAction.searchCategoryChanged
 					),
 					label: Text(""),
 					content: {
-						Text("Vše").tag(0)
-						Text("Hráči").tag(1)
-						Text("Soutěže").tag(2)
+						ForEach( SearchCategory.all ) { category in
+							Text(category.title).tag(category.rawValue)
+						}
 					}
 					)
 					.pickerStyle(SegmentedPickerStyle())
-					.disabled(viewStore.isLoading)
+					// .disabled(viewStore.isLoading)
 				}
 				ScrollView {
 					VStack {
@@ -61,15 +65,17 @@ struct SearchView: View {
 					}
 				}
 			}
-		}.padding()
+			.padding()
+		}
     }
 }
 
 struct SearchResultItemView: View {
 	let item: SearchModel
 	var body: some View {
-		Text(item.sportName).bold()
-		Text(item.name)
+		Text(item.name).bold()
+		Text(item.sport)
+		Text(item.imageName ?? "Placeholder").italic()
 		Spacer()
 	}
 }
@@ -81,7 +87,7 @@ struct SearchView_Previews: PreviewProvider {
 			reducer: searchReducer,
 			environment: SystemEnvironment.dev(
 				environment: SearchEnvironment(
-					searchRequest: mockSearchEffect
+					searchRequest: searchEffect
 				)
 			)
 		)
@@ -93,7 +99,7 @@ struct SeasrchDetailView: View {
 	var model: SearchModel
 	var body: some View {
 		VStack {
-			Text(model.sportName).bold()
+			Text(model.name).bold()
 			Text(model.name)
 		}
 	}

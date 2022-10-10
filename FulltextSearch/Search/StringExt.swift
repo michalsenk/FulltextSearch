@@ -9,6 +9,7 @@ import Foundation
 
 extension String {
 	func isValidSearchString() -> Bool {
+		// TODO: more validation needed
 		!self.isEmpty
 	}
 }
