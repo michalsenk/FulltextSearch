@@ -7,57 +7,67 @@
 
 import Combine
 import ComposableArchitecture
+import SDWebImageSwiftUI
 import SwiftUI
 
 struct SearchView: View {
 	let store: Store<SearchState, SearchAction>
     var body: some View {
 		WithViewStore(self.store) { viewStore in
-			VStack {
-				HStack {
-					TextField(
-						"Hráč nebo soutěž ...",
-						text: viewStore.binding(
+			NavigationView {
+				VStack {
+					Spacer()
+					HStack {
+						TextField(
+							"Co hledat ?",
+							text: viewStore.binding(
+								get: \.searchString,
+								send: SearchAction.searchStringChanged
+							)
+						)
+						.textFieldStyle(.roundedBorder)
+						.disableAutocorrection(true)
+						.autocapitalization(.none)
+						.modifier(ClearButton(text: viewStore.binding(
 							get: \.searchString,
 							send: SearchAction.searchStringChanged
-						)
-					)
-					.textFieldStyle(.roundedBorder)
-					.disableAutocorrection(true)
-					.autocapitalization(.none)
+						)))
 
-					Button("Hledat") {
-						viewStore.send(.searchButtonTapped)
-					}
-					// .disabled(viewStore.isLoading)
-				}
-				HStack {
-					Picker(
-						selection: viewStore.binding(
-							get: \.searchCategory.rawValue,
-							send: SearchAction.searchCategoryChanged
-					),
-					label: Text(""),
-					content: {
-						ForEach( SearchCategory.all ) { category in
-							Text(category.title).tag(category.rawValue)
+						Button("Hledat") {
+							viewStore.send(.searchButtonTapped)
 						}
 					}
-					)
-					.pickerStyle(SegmentedPickerStyle())
-					// .disabled(viewStore.isLoading)
-				}
-				ScrollView {
-					VStack {
-						Group {
-							if viewStore.isLoading {
-								Text("Načítám ...")
+					HStack {
+						Picker(
+							selection: viewStore.binding(
+								get: \.searchCategory.rawValue,
+								send: SearchAction.searchCategoryChanged
+						),
+						label: Text(""),
+						content: {
+							ForEach( SearchCategory.all ) { category in
+								Text(category.title).tag(category.rawValue)
 							}
-							else {
-								ForEach(viewStore.results) { item in
-									NavigationLink(
-										destination: SeasrchDetailView(model: item)) {
-										SearchResultItemView(item: item)
+						}
+						)
+						.pickerStyle(SegmentedPickerStyle())
+					}
+					ScrollView {
+						VStack {
+							Group {
+								if viewStore.isLoading {
+									Text("Načítám ...")
+								}
+								else {
+									ForEach(viewStore.results) { section in
+										Section(header: SectionHeaderView(name: section.name)) {
+											ForEach(section.models) { model in
+												NavigationLink(
+													destination: SeasrchDetailView(model: model)) {
+													SearchResultModelView(model: model)
+												}
+											}
+										}
 									}
 								}
 							}
@@ -66,17 +76,41 @@ struct SearchView: View {
 				}
 			}
 			.padding()
+			.navigationTitle("Vyhledávání")
+			.alert(
+				self.store.scope(state: \.alert),
+				dismiss: .alertCancelTapped
+			)
 		}
     }
 }
 
-struct SearchResultItemView: View {
-	let item: SearchModel
+struct SectionHeaderView: View {
+	let name: String
 	var body: some View {
-		Text(item.name).bold()
-		Text(item.sport)
-		Text(item.imageName ?? "Placeholder").italic()
-		Spacer()
+		HStack {
+			Text(name)
+				.font(.headline)
+			Spacer()
+		}
+		.padding()
+	}
+}
+
+struct SearchResultModelView: View {
+	let model: SearchModel
+	var body: some View {
+		HStack {
+			LineImageView(url: model.imageUrl, squareSize: 50)
+			VStack(alignment: .leading) {
+				Text(model.name)
+					.bold()
+				Text(model.country)
+			}
+			Spacer()
+		}
+		.padding()
+		.frame(height: 50)
 	}
 }
 
@@ -93,14 +127,4 @@ struct SearchView_Previews: PreviewProvider {
 		)
         SearchView(store: store)
     }
-}
-
-struct SeasrchDetailView: View {
-	var model: SearchModel
-	var body: some View {
-		VStack {
-			Text(model.name).bold()
-			Text(model.name)
-		}
-	}
 }

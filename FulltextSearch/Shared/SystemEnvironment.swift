@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import Foundation
+import Network
 
 @dynamicMemberLookup
 struct SystemEnvironment<Environment> {
@@ -14,6 +15,8 @@ struct SystemEnvironment<Environment> {
 
 	var mainQueue: () -> AnySchedulerOf<DispatchQueue>
 	var decoder: () -> JSONDecoder
+	
+	let n = NWPathMonitor()
 
 	private static func decoder() -> JSONDecoder {
 		let decoder = JSONDecoder()
