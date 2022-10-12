@@ -30,8 +30,10 @@ enum SearchCategory: Int {
 		switch self {
 		case .none:
 			return [1, 2, 3, 4]
+
 		case .justPlayers:
 			return [3, 4]
+
 		case .justCompetitions:
 			return [1]
 		}

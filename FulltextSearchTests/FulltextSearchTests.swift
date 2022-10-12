@@ -5,32 +5,41 @@
 //  Created by Michal Šenk on 29.09.2022.
 //
 
+import ComposableArchitecture
+import Network
+import SDWebImageSwiftUI
 import XCTest
+
 @testable import FulltextSearch
 
 final class FulltextSearchTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
+	let testScheduler = DispatchQueue.test
+	let searchResultMock = SearchModel.mockArray
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
+// case searchStringChanged(String)
+// case searchButtonTapped
+// case searchCategoryChanged(Int)
+// case searchDataReturned(Result<[SearchModel], APIError>)
+// case alertCancelTapped
+// case alertRetryTapped
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-    }
+    func testDataReceivedSearch() {
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
+		let store = TestStore(
+			initialState: SearchState(),
+			reducer: searchReducer,
+			environment: SystemEnvironment(
+				environment: SearchEnvironment.dev,
+				mainQueue: { self.testScheduler.eraseToAnyScheduler() },
+				decoder: { JSONDecoder() },
+				pathMonitor: { NWPathMonitor() }
+			)
+		)
 
+		store.send(.searchDataReturned(.success(searchResultMock))) { [weak self] state in
+			guard let self = self else { return }
+			state.results = self.searchResultMock.toSections()
+		}
+    }
 }

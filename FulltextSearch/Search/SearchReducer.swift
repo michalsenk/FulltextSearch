@@ -43,13 +43,8 @@ let searchReducer = Reducer<
 	case .searchDataReturned( let result):
 		state.isLoading = false
 		switch result {
-		case .success(let data):
-			let dict = Dictionary(grouping: data, by: { $0.sport })
-			let sections = dict.map({
-				SearchModelSection(name: $0.key, models: $0.value)
-			})
-
-			state.results = sections
+		case .success(let models):
+			state.results = models.toSections()
 			return .none
 
 		case .failure(let error):
