@@ -36,6 +36,7 @@ struct SearchView: View {
 						Button("Hledat") {
 							viewStore.send(.searchButtonTapped)
 						}
+						.disabled(viewStore.isLoading)
 					}
 					HStack {
 						Picker(

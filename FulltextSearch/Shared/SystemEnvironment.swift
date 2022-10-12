@@ -15,8 +15,11 @@ struct SystemEnvironment<Environment> {
 
 	var mainQueue: () -> AnySchedulerOf<DispatchQueue>
 	var decoder: () -> JSONDecoder
-	
-	let n = NWPathMonitor()
+	var pathMonitor: () -> NWPathMonitor
+
+	private static func pathMonitor() -> NWPathMonitor {
+		NWPathMonitor()
+	}
 
 	private static func decoder() -> JSONDecoder {
 		let decoder = JSONDecoder()
@@ -25,12 +28,14 @@ struct SystemEnvironment<Environment> {
 	}
 
 	static func live(environment: Environment) -> Self {
-		Self(environment: environment, mainQueue: { .main }, decoder: decoder)
+		Self(environment: environment, mainQueue: { .main }, decoder: decoder, pathMonitor: pathMonitor)
 	}
-
+	
+	#if DEBUG
 	static func dev(environment: Environment) -> Self {
-		Self(environment: environment, mainQueue: { .main }, decoder: decoder)
+		Self(environment: environment, mainQueue: { .main }, decoder: decoder, pathMonitor: pathMonitor)
 	}
+	#endif
 
 	subscript<Dependency>(
 		dynamicMember keyPath: WritableKeyPath<Environment, Dependency>

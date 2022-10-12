@@ -13,7 +13,7 @@ private struct RawModel: Decodable {
 		var path: String?
 		var variantTypeId: Int
 	}
-	
+
 	struct Country: Decodable {
 		var name: String
 	}
@@ -66,5 +66,33 @@ struct SearchModelSection: Equatable, Identifiable {
 		self.name = name
 		self.models = models
 		self.id = "\(name)\(models.map { $0.name } .joined())"
+	}
+}
+
+extension SearchModel {
+	static var mockArray: [SearchModel] {
+		[
+			"https://www.livesport.cz/res/image/data/2yzKvwhU-WOPcYF7D.png",
+			"https://www.livesport.cz/res/image/data/OCsZNke5-679ShjBm.png",
+			"https://www.livesport.cz/res/image/data/tGlwrdDa-bcMlgUsc.png",
+			"https://www.livesport.cz/res/image/data/8nHYSHAr-QD5YRW2q.png"
+		].compactMap {
+			SearchModel(
+				name: "TestName",
+				sport: "TestSport",
+				country: "TestCountry",
+				imageUrl: URL(string: $0)
+			)
+		}
+	}
+}
+
+extension Array<SearchModel> {
+	func toSections() -> [SearchModelSection] {
+		let dict = Dictionary(grouping: self) { $0.sport }
+		let sections = dict.map {
+			SearchModelSection(name: $0.key, models: $0.value)
+		}
+		return sections
 	}
 }
