@@ -16,32 +16,52 @@ func searchEffect(
 
 	let escapedQuery = searchQuery.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? searchQuery
 	let categoriesString = searchCategory.searchQueryIDs.map { "\($0)" }.joined(separator: ",")
-	let URLString = "https://s.livesport.services/api/v2/"
-	+ "search?type-ids=\(categoriesString)"
+	let URLString = "https://s.livesport.services/api/v2/search"
+	+ "?type-ids=\(categoriesString)"
 	+ "&project-type-id=1"
 	+ "&project-id=602"
 	+ "&lang-id=1"
-	+ "&q=\(escapedQuery)"
+	//+ "&q=\(escapedQuery)"
 	+ "&sport-ids=1,2,3,4,5,6,7,8,9"
 	guard let URL = URL(string: URLString) else {
 		fatalError("Search URL not made")
 	}
 
-	return URLSession.shared.dataTaskPublisher(for: URL)
+	return URLSession.shared
+		.dataTaskPublisher(for: URL)
 		.mapError { error in
 			APIError.responseError
 		}
-		.map { data, _ in
+		.tryMap { data, _ -> [SearchModel] in
 			print(data.prettyPrintedJSONString)
-			return data
+			if let searchData = try? decoder.decode(
+				[SearchModel].self,
+				from: data
+			) {
+				return searchData
+			}
+
+			if let searchData = try? decoder.decode(
+				SearchAPIErrorResponse.self,
+				from: data
+			) {
+				switch searchData.code {
+				case 101: throw APIError.requestValuesMissing
+				case 100: throw APIError.requestValuesInvalid
+				case 110: throw APIError.serviceUnavailable
+				default: throw APIError.responseError
+				}
+			}
+			throw APIError.responseError
 		}
-		.decode(type: [SearchModel].self, decoder: decoder)
+//		.decode(type: [SearchModel].self, decoder: decoder)
 		.mapError { error in
 			APIError.decodingError
 		}
 		.eraseToEffect()
 }
 
+// TODO: remove ... 
 extension Data {
 	var prettyPrintedJSONString: NSString? { /// NSString gives us a nice sanitized debugDescription
 		guard let object = try? JSONSerialization.jsonObject(with: self, options: []),

@@ -16,24 +16,18 @@ let searchReducer = Reducer<
 > { state, action, environment in
 	switch action {
 	case .searchStringChanged(let searchString):
+		state.searchString = searchString
 		guard !searchString.isEmpty else {
 			state.results = []
 			return .cancel(id: state.searchString)
 		}
-		state.searchString = searchString
 		return .none
 
 	case .searchButtonTapped:
 		state.isLoading = true
-		return environment.searchRequest(state.searchString, state.searchCategory, environment.decoder())
-			.receive(on: environment.mainQueue())
-			.delay(for: 2, scheduler: environment.mainQueue())
-			.catchToEffect()
-			.map(SearchAction.searchDataReturned)
-			.cancellable(id: state.searchString)
+		return search(state.searchString, state.searchCategory, environment)
 
 	case .searchCategoryChanged(let index):
-
 		guard let category = SearchCategory(rawValue: index) else {
 			fatalError("Search category not made")
 		}
@@ -43,26 +37,54 @@ let searchReducer = Reducer<
 			return .none
 		}
 
-		// TODO: cancel previous EFFECT before running new one
 		state.isLoading = true
-		// TODO: remove duplicit
-		return environment.searchRequest(state.searchString, state.searchCategory, environment.decoder())
-			.debounce(id: state.searchString, for: .seconds(1), scheduler: environment.mainQueue())
-			.receive(on: environment.mainQueue())
-			.catchToEffect()
-			.map(SearchAction.searchDataReturned)
+		return search(state.searchString, state.searchCategory, environment)
 
 	case .searchDataReturned( let result):
 		state.isLoading = false
 		switch result {
 		case .success(let data):
-			print("searchDataReturned")
-			state.results = data
+			let dict = Dictionary(grouping: data, by: { $0.sport })
+			let sections = dict.map({
+				SearchModelSection(name: $0.key, models: $0.value)
+			})
+
+			state.results = sections
 			return .none
 
 		case .failure(let error):
+			state.alert = AlertState(
+				title: TextState(error.localizedAlertTitle),
+				message: TextState(error.localizedDescription),
+				primaryButton: .default( TextState(error.localizedRetryActionTitle), send: .alertRetryTapped),
+				secondaryButton: .cancel(send: .alertCancelTapped)
+			)
 			return .none
 		}
+
+	case .alertCancelTapped:
+		state.alert = nil
+		return .none
+
+	case .alertRetryTapped:
+		state.alert = nil
+		state.isLoading = true
+		return search(state.searchString, state.searchCategory, environment)
 	}
 }
 .signpost()
+
+private func search (
+	_ searchString: String,
+	_ category: SearchCategory,
+	_ environment: SystemEnvironment<SearchEnvironment>
+	) -> Effect<SearchAction, Never> {
+
+		let cancelID = searchString
+		return environment.searchRequest(searchString, category, environment.decoder())
+			.debounce(id: cancelID, for: .seconds(1), scheduler: environment.mainQueue())
+			.receive(on: environment.mainQueue())
+			.catchToEffect()
+			.map(SearchAction.searchDataReturned)
+			.cancellable(id: cancelID)
+}

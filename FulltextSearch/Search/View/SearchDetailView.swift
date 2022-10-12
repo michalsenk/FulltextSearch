@@ -22,10 +22,21 @@ struct SeasrchDetailView: View {
 	}
 }
 
+struct SeasrchDetailViewMock: View {
+	let model = SearchModel(
+		name: "Djokovic Novak",
+		sport: "Tenis",
+		country: "Serbia",
+		imageUrl: URL(string: "https://www.livesport.cz/res/image/data/tSfwGCdM-0rY6MEPI.png")
+	)
 
+	var body: some View {
+		SeasrchDetailView(model: model)
+	}
+}
 
 struct SearchDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchDetailView()
+		SeasrchDetailViewMock()
     }
 }
