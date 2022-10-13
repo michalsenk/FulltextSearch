@@ -50,12 +50,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		7846F7D628E5CD1E003961E2 /* FulltextSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = FulltextSearch.app; path = "/Users/michalsenk/Documents/W/apps/__livesport/FulltextSearch/build/Debug-iphoneos/FulltextSearch.app"; sourceTree = "<absolute>"; };
 		7846F7D928E5CD1E003961E2 /* MainApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainApp.swift; sourceTree = "<group>"; };
 		7846F7DB28E5CD1E003961E2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7846F7DD28E5CD20003961E2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7846F7E028E5CD20003961E2 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		7846F7E628E5CD20003961E2 /* FulltextSearchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = FulltextSearchTests.xctest; path = "/Users/michalsenk/Documents/W/apps/__livesport/FulltextSearch/build/Debug-iphoneos/FulltextSearchTests.xctest"; sourceTree = "<absolute>"; };
 		7846F7EA28E5CD20003961E2 /* FulltextSearchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FulltextSearchTests.swift; sourceTree = "<group>"; };
 		7846F80B28E5CEFB003961E2 /* SearchEffects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchEffects.swift; sourceTree = "<group>"; };
 		7846F80D28E5CF0F003961E2 /* SearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
@@ -79,6 +77,8 @@
 		789C48CF28F56F1300572CF6 /* SearchAPIErrorResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAPIErrorResponse.swift; sourceTree = "<group>"; };
 		789C48D128F591E100572CF6 /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		789C48D328F699EE00572CF6 /* NetMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetMonitor.swift; sourceTree = "<group>"; };
+		78CD5F5B28F80CF200BDBABC /* FulltextSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FulltextSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		78CD5F5C28F80CF200BDBABC /* FulltextSearchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FulltextSearchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +108,8 @@
 				7846F7D828E5CD1E003961E2 /* FulltextSearch */,
 				7846F7E928E5CD20003961E2 /* FulltextSearchTests */,
 				789C48D528F6E72E00572CF6 /* Frameworks */,
+				78CD5F5B28F80CF200BDBABC /* FulltextSearch.app */,
+				78CD5F5C28F80CF200BDBABC /* FulltextSearchTests.xctest */,
 			);
 			sourceTree = "<group>";
 		};
@@ -229,7 +231,7 @@
 				787FF4B928F43C6D001C4130 /* SDWebImageSwiftUI */,
 			);
 			productName = FulltextSearch;
-			productReference = 7846F7D628E5CD1E003961E2 /* FulltextSearch.app */;
+			productReference = 78CD5F5B28F80CF200BDBABC /* FulltextSearch.app */;
 			productType = "com.apple.product-type.application";
 		};
 		7846F7E528E5CD20003961E2 /* FulltextSearchTests */ = {
@@ -250,7 +252,7 @@
 				789C48D628F6E72E00572CF6 /* SDWebImageSwiftUI */,
 			);
 			productName = FulltextSearchTests;
-			productReference = 7846F7E628E5CD20003961E2 /* FulltextSearchTests.xctest */;
+			productReference = 78CD5F5C28F80CF200BDBABC /* FulltextSearchTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */

@@ -10,7 +10,7 @@ import Foundation
 import Network
 
 @dynamicMemberLookup
-struct SystemEnvironment<Environment> {
+	struct SystemEnvironment<Environment> {
 	var environment: Environment
 
 	var mainQueue: () -> AnySchedulerOf<DispatchQueue>
@@ -30,10 +30,10 @@ struct SystemEnvironment<Environment> {
 	static func live(environment: Environment) -> Self {
 		Self(environment: environment, mainQueue: { .main }, decoder: decoder, pathMonitor: pathMonitor)
 	}
-	
+
 	#if DEBUG
-	static func dev(environment: Environment) -> Self {
-		Self(environment: environment, mainQueue: { .main }, decoder: decoder, pathMonitor: pathMonitor)
+		static func dev(environment: Environment, mainQueue: AnySchedulerOf<DispatchQueue>) -> Self {
+		Self(environment: environment, mainQueue: { mainQueue }, decoder: decoder, pathMonitor: pathMonitor)
 	}
 	#endif
 

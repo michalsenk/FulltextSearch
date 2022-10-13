@@ -16,7 +16,7 @@ struct MainApp: App {
 				store: Store(
 					initialState: RootState(),
 					reducer: rootReducer,
-					environment: SystemEnvironment.dev(environment: RootEnvironment())
+					environment: SystemEnvironment.live(environment: RootEnvironment())
 				)
 			)
         }

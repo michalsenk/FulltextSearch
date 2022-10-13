@@ -15,8 +15,8 @@ struct SearchEnvironment {
 
 #if DEBUG
 extension SearchEnvironment {
-	static var dev = SearchEnvironment(searchRequest: { String, SearchCategory, JSONDecoder in
-		return Effect(value: SearchModel.mockArray)
-	})
+	static var dev = SearchEnvironment { ( _: String, _: SearchCategory, _: JSONDecoder) in
+		Effect(value: SearchModel.mockArray)
+	}
 }
 #endif
