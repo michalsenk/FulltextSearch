@@ -15,11 +15,7 @@ import Network
 
 	var mainQueue: () -> AnySchedulerOf<DispatchQueue>
 	var decoder: () -> JSONDecoder
-	var pathMonitor: () -> NWPathMonitor
-
-	private static func pathMonitor() -> NWPathMonitor {
-		NWPathMonitor()
-	}
+	var connectivityEffect: () -> Effect<NWPath.Status, Never>
 
 	private static func decoder() -> JSONDecoder {
 		let decoder = JSONDecoder()
@@ -27,13 +23,31 @@ import Network
 		return decoder
 	}
 
+	private static func connectivityPublisher() -> Effect<NWPath.Status, Never> {
+		let publisher = NWPathMonitor.NetworkStatusPublisher(
+			monitor: NWPathMonitor(),
+			queue: .main
+		)
+		return Effect(publisher)
+	}
+
 	static func live(environment: Environment) -> Self {
-		Self(environment: environment, mainQueue: { .main }, decoder: decoder, pathMonitor: pathMonitor)
+		Self(
+			environment: environment,
+			mainQueue: { .main },
+			decoder: decoder,
+			connectivityEffect: connectivityPublisher
+		)
 	}
 
 	#if DEBUG
 		static func dev(environment: Environment, mainQueue: AnySchedulerOf<DispatchQueue>) -> Self {
-		Self(environment: environment, mainQueue: { mainQueue }, decoder: decoder, pathMonitor: pathMonitor)
+			Self(
+				environment: environment,
+				mainQueue: { mainQueue },
+				decoder: decoder,
+				connectivityEffect: connectivityPublisher
+			)
 	}
 	#endif
 

@@ -15,6 +15,7 @@ let searchReducer = Reducer<
 	SystemEnvironment<SearchEnvironment>
 > { state, action, environment in
 	switch action {
+
 	case .searchStringChanged(let searchString):
 		state.searchString = searchString
 		guard !searchString.isEmpty else {
@@ -24,6 +25,9 @@ let searchReducer = Reducer<
 		return .none
 
 	case .searchButtonTapped:
+		if !state.searchString.isValidSearchString() {
+			return .none
+		}
 		state.isLoading = true
 		return Effect(value: SearchAction.doSearch)
 
@@ -74,22 +78,17 @@ let searchReducer = Reducer<
 	case .alertRetryTapped:
 		state.alert = nil
 		state.isLoading = true
-		return search(state.searchString, state.searchCategory, environment)
+		return Effect(value: .doSearch)
+
+	case .networkChange(.success(let newStatus)):
+		print(newStatus)
+		state.networkStatus = newStatus
+		return .none
+
+	case .didFinishLaunching:
+		return environment.connectivityEffect()
+			.catchToEffect()
+			.map(SearchAction.networkChange)
 	}
 }
 .signpost()
-
-private func search (
-	_ searchString: String,
-	_ category: SearchCategory,
-	_ environment: SystemEnvironment<SearchEnvironment>
-	) -> Effect<SearchAction, Never> {
-
-		let cancelID = searchString
-		return environment.searchRequest(searchString, category, environment.decoder())
-			.debounce(id: cancelID, for: .seconds(0.5), scheduler: environment.mainQueue())
-			.receive(on: environment.mainQueue())
-			.catchToEffect()
-			.map(SearchAction.searchDataReturned)
-			.cancellable(id: cancelID)
-}

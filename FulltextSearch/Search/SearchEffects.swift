@@ -61,8 +61,7 @@ func searchEffect(
 			}
 			throw APIError.responseError
 		}
-//		.decode(type: [SearchModel].self, decoder: decoder)
-		.mapError { error in
+		.mapError { _ in
 			APIError.decodingError
 		}
 		.eraseToEffect()

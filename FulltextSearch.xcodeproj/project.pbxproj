@@ -34,7 +34,6 @@
 		789C48CB28F5504100572CF6 /* LineImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789C48CA28F5504100572CF6 /* LineImageView.swift */; };
 		789C48CE28F553B100572CF6 /* SearchDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789C48CD28F553B100572CF6 /* SearchDetailView.swift */; };
 		789C48D028F56F1300572CF6 /* SearchAPIErrorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789C48CF28F56F1300572CF6 /* SearchAPIErrorResponse.swift */; };
-		789C48D228F591E100572CF6 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789C48D128F591E100572CF6 /* ViewExtension.swift */; };
 		789C48D428F699EE00572CF6 /* NetMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789C48D328F699EE00572CF6 /* NetMonitor.swift */; };
 		789C48D728F6E72E00572CF6 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 789C48D628F6E72E00572CF6 /* SDWebImageSwiftUI */; };
 /* End PBXBuildFile section */
@@ -50,6 +49,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		783E4BF428F83C11007AA393 /* FulltextSearchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = FulltextSearchTests.xctest; path = "/Users/michalsenk/Documents/W/apps/__livesport/FulltextSearch/build/Debug-iphoneos/FulltextSearchTests.xctest"; sourceTree = "<absolute>"; };
 		7846F7D928E5CD1E003961E2 /* MainApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainApp.swift; sourceTree = "<group>"; };
 		7846F7DB28E5CD1E003961E2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7846F7DD28E5CD20003961E2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -75,10 +75,8 @@
 		789C48CA28F5504100572CF6 /* LineImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineImageView.swift; sourceTree = "<group>"; };
 		789C48CD28F553B100572CF6 /* SearchDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDetailView.swift; sourceTree = "<group>"; };
 		789C48CF28F56F1300572CF6 /* SearchAPIErrorResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAPIErrorResponse.swift; sourceTree = "<group>"; };
-		789C48D128F591E100572CF6 /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		789C48D328F699EE00572CF6 /* NetMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetMonitor.swift; sourceTree = "<group>"; };
 		78CD5F5B28F80CF200BDBABC /* FulltextSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FulltextSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		78CD5F5C28F80CF200BDBABC /* FulltextSearchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FulltextSearchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,7 +107,6 @@
 				7846F7E928E5CD20003961E2 /* FulltextSearchTests */,
 				789C48D528F6E72E00572CF6 /* Frameworks */,
 				78CD5F5B28F80CF200BDBABC /* FulltextSearch.app */,
-				78CD5F5C28F80CF200BDBABC /* FulltextSearchTests.xctest */,
 			);
 			sourceTree = "<group>";
 		};
@@ -161,7 +158,6 @@
 				789C48C628F541F600572CF6 /* View */,
 				7846F81528E5D1CD003961E2 /* APIError.swift */,
 				7846F81728E5D324003961E2 /* SystemEnvironment.swift */,
-				789C48D128F591E100572CF6 /* ViewExtension.swift */,
 				789C48D328F699EE00572CF6 /* NetMonitor.swift */,
 			);
 			path = Shared;
@@ -252,7 +248,7 @@
 				789C48D628F6E72E00572CF6 /* SDWebImageSwiftUI */,
 			);
 			productName = FulltextSearchTests;
-			productReference = 78CD5F5C28F80CF200BDBABC /* FulltextSearchTests.xctest */;
+			productReference = 783E4BF428F83C11007AA393 /* FulltextSearchTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -361,7 +357,6 @@
 				789C48CE28F553B100572CF6 /* SearchDetailView.swift in Sources */,
 				789C48C828F5422D00572CF6 /* ClearButton.swift in Sources */,
 				787FF4AF28F1A8CF001C4130 /* RootAction.swift in Sources */,
-				789C48D228F591E100572CF6 /* ViewExtension.swift in Sources */,
 				7846F81628E5D1CD003961E2 /* APIError.swift in Sources */,
 				787FF4B328F1A8E7001C4130 /* RootReducer.swift in Sources */,
 				787FF4B128F1A8DC001C4130 /* RootEnvironment.swift in Sources */,

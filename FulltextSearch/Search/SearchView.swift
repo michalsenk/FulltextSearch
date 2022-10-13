@@ -36,7 +36,7 @@ struct SearchView: View {
 						Button("Hledat") {
 							viewStore.send(.searchButtonTapped)
 						}
-						.disabled(viewStore.isLoading)
+						.disabled(viewStore.isLoading || (viewStore.networkStatus == .unsatisfied))
 					}
 					HStack {
 						Picker(
@@ -52,12 +52,16 @@ struct SearchView: View {
 						}
 						)
 						.pickerStyle(SegmentedPickerStyle())
+						.disabled(viewStore.networkStatus == .unsatisfied)
 					}
 					ScrollView {
 						VStack {
 							Group {
 								if viewStore.isLoading {
 									Text("Načítám ...")
+								}
+								else if viewStore.networkStatus == .unsatisfied {
+									Text("Aplikace je offline")
 								}
 								else {
 									ForEach(viewStore.results) { section in
@@ -82,6 +86,7 @@ struct SearchView: View {
 				self.store.scope(state: \.alert),
 				dismiss: .alertCancelTapped
 			)
+			.onAppear { viewStore.send(.didFinishLaunching) }
 		}
     }
 }

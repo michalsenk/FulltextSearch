@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Network
 
 enum SearchAction: Equatable {
 	case searchStringChanged(String)
@@ -15,4 +16,6 @@ enum SearchAction: Equatable {
 	case searchDataReturned(Result<[SearchModel], APIError>)
 	case alertCancelTapped
 	case alertRetryTapped
+	case didFinishLaunching
+	case networkChange(Result<NWPath.Status, Never>)
 }
