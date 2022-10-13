@@ -30,27 +30,27 @@ enum APIError: LocalizedError {
 			return "Server Livesportu říká, že to, co mu posíláme, není žádná hitparáda."
 		}
 	}
-	
+
 	var localizedRetryActionTitle: String {
 		switch self {
 
-		case .responseError: fallthrough
-		case .decodingError: fallthrough
-		case .serviceUnavailable: fallthrough
-		case .requestValuesMissing: fallthrough
-		case .requestValuesInvalid:
+		case .responseError,
+			.decodingError,
+			.serviceUnavailable,
+			.requestValuesMissing,
+			.requestValuesInvalid:
 			return "Opakovat"
 		}
 	}
-	
+
 	var localizedAlertTitle: String {
 		switch self {
 
-		case .responseError: fallthrough
-		case .decodingError: fallthrough
-		case .serviceUnavailable: fallthrough
-		case .requestValuesMissing: fallthrough
-		case .requestValuesInvalid:
+		case .responseError,
+			.decodingError,
+			.serviceUnavailable,
+			.requestValuesMissing,
+			.requestValuesInvalid:
 			return "Chyba"
 		}
 	}

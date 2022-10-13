@@ -8,6 +8,7 @@
 import Combine
 import ComposableArchitecture
 import Foundation
+import Network
 
 struct SearchEnvironment {
 	var searchRequest: (String, SearchCategory, JSONDecoder) -> Effect<[SearchModel], APIError>
