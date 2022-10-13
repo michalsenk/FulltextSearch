@@ -25,7 +25,7 @@ let searchReducer = Reducer<
 
 	case .searchButtonTapped:
 		state.isLoading = true
-		return search(state.searchString, state.searchCategory, environment)
+		return Effect(value: SearchAction.doSearch)
 
 	case .searchCategoryChanged(let index):
 		guard let category = SearchCategory(rawValue: index) else {
@@ -36,9 +36,19 @@ let searchReducer = Reducer<
 		if !state.searchString.isValidSearchString() {
 			return .none
 		}
+		else {
+			state.isLoading = true
+			return Effect(value: SearchAction.doSearch)
+		}
 
-		state.isLoading = true
-		return search(state.searchString, state.searchCategory, environment)
+	case .doSearch:
+		let cancelID = state.searchString
+		return environment.searchRequest(state.searchString, state.searchCategory, environment.decoder())
+			.debounce(id: cancelID, for: .seconds(0.5), scheduler: environment.mainQueue())
+			.receive(on: environment.mainQueue())
+			.catchToEffect()
+			.map(SearchAction.searchDataReturned)
+			.cancellable(id: cancelID, cancelInFlight: true)
 
 	case .searchDataReturned( let result):
 		state.isLoading = false
@@ -77,7 +87,7 @@ private func search (
 
 		let cancelID = searchString
 		return environment.searchRequest(searchString, category, environment.decoder())
-			.debounce(id: cancelID, for: .seconds(1), scheduler: environment.mainQueue())
+			.debounce(id: cancelID, for: .seconds(0.5), scheduler: environment.mainQueue())
 			.receive(on: environment.mainQueue())
 			.catchToEffect()
 			.map(SearchAction.searchDataReturned)

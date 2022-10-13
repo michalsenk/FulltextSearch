@@ -11,6 +11,7 @@ enum SearchAction: Equatable {
 	case searchStringChanged(String)
 	case searchButtonTapped
 	case searchCategoryChanged(Int)
+	case doSearch
 	case searchDataReturned(Result<[SearchModel], APIError>)
 	case alertCancelTapped
 	case alertRetryTapped

@@ -17,7 +17,7 @@ let rootReducer = Reducer<
 		state: \.searchState,
 		action: /RootAction.searchAction,
 		environment: { _ in
-			SystemEnvironment.dev(environment: SearchEnvironment(searchRequest: searchEffect))
+			SystemEnvironment.live(environment: SearchEnvironment(searchRequest: searchEffect))
 		}
 	)
 )

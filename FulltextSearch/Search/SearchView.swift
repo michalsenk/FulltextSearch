@@ -120,7 +120,7 @@ struct SearchView_Previews: PreviewProvider {
 		let store = Store(
 			initialState: SearchState(),
 			reducer: searchReducer,
-			environment: SystemEnvironment.dev(
+			environment: SystemEnvironment.live(
 				environment: SearchEnvironment(
 					searchRequest: searchEffect
 				)
