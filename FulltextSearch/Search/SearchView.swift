@@ -127,7 +127,7 @@ struct SearchView_Previews: PreviewProvider {
 			reducer: searchReducer,
 			environment: SystemEnvironment.live(
 				environment: SearchEnvironment(
-					searchRequest: searchEffect
+					searchRequest: searchEffectMock
 				)
 			)
 		)

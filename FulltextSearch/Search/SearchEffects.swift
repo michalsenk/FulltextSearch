@@ -66,3 +66,12 @@ func searchEffect(
 		}
 		.eraseToEffect()
 }
+
+func searchEffectMock(
+	searchQuery: String,
+	searchCategory: SearchCategory,
+	decoder: JSONDecoder
+) -> Effect<[SearchModel], APIError> {
+
+	return Effect(value: SearchModel.mockArray)
+}
